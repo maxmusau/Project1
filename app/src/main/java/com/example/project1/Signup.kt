@@ -54,11 +54,12 @@ class Signup : AppCompatActivity() {
                         headers: Array<out Header>?,
                         response: JSONObject?
                     ) {
+
                         //check if status code is success (200)
                         if (statusCode == 201){
-                            Toast.makeText(applicationContext,"You have been successfully registered",
+                            Toast.makeText(applicationContext,"You have been successfully registered" +statusCode,
                                 Toast.LENGTH_LONG).show()
-                            val i =Intent(applicationContext,MainActivity::class.java)
+                            val i =Intent(applicationContext,Signin::class.java)
                             startActivity(i)
                             finish()
                         } //end of if
@@ -67,7 +68,7 @@ class Signup : AppCompatActivity() {
                         }
                         //super.onSuccess(statusCode, headers, response)
                     } //end of onsuccess
-
+//https://github.com/maxmusau/Navigation_Drawer/tree/master
                     override fun onFailure(
                         statusCode: Int,
                         headers: Array<out Header>?,

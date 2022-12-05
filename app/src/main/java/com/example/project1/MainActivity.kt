@@ -12,109 +12,74 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.GsonBuilder
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.JsonHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import cz.msebera.android.httpclient.entity.StringEntity
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var user:String
-    private val sharedPrefFile = "kotlinsharedpreference"
-    @SuppressLint("MissingInflatedId")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val signup =findViewById<TextView>(R.id.register)
-        val progress =findViewById<ProgressBar>(R.id.progressbar)
-        progress.visibility =View.GONE
-        signup.setOnClickListener {
-            val i = Intent(applicationContext, Signup::class.java)
-            startActivity(i)
-            finish() //kills the previous activity
-            //find email,password
-        }
-            val email =findViewById<EditText>(R.id.email)
-            val password =findViewById<EditText>(R.id.password)
-            val signin =findViewById<Button>(R.id.login)
+        //https://github.com/maxmusau/conferenceRoom
+        //consume the cinference room items from API
+        lateinit var confrerenceRoom:ArrayList<Conference_Room>
+        lateinit var recyclerAdapter: RecyclerAdapter //call the adapter
+        lateinit var progressbar: ProgressBar
+        lateinit var recyclerView: RecyclerView
 
-        signin.setOnClickListener {
-                progress.visibility=View.VISIBLE //show progress bar
-                val client =AsyncHttpClient(true,80,443)
-                val body =JSONObject()
-                //access the details inserted by user -values from the edittexts
-                //put them details inside a body of json object
-                body.put("Email",email.text.toString())
-                body.put("Password",password.text.toString())
-                val con_body =StringEntity(body.toString())
-                // https://musau.pythonanywhere.com/signup
-                client.post(this,"https://musau.pythonanywhere.com/signin",con_body,
-                    "application/json",
-                    object : JsonHttpResponseHandler() {
-                        //create a function for onsuccess
-                        override fun onSuccess(
-                            statusCode: Int,
-                            headers: Array<out Header>?,
-                            response: JSONObject?
-                        ) {
-                            //check if status code is success (200)
-                            if (statusCode == 200){
-//
-                            fun onClick(v: View?) {
-                                val value = editText.text.toString().trim { it <= ' ' }
-                                val sharedPref = getSharedPreferences("myKey", MODE_PRIVATE)
-                                val editor = sharedPref.edit()
-                                editor.putString("value", value)
-                                editor.apply()
-                                val intent = Intent(this@MainActivity, SecondActivity::class.java)
-                                startActivity(intent)
-                            }
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_main)
 
-                                Toast.makeText(applicationContext,"You have signed in successfully",
-                                    Toast.LENGTH_LONG).show()
-                                val i =Intent(applicationContext,Welcome::class.java)
-                                startActivity(i)
-                            } //end of if
-                            else{
-                                Toast.makeText(applicationContext,"Wrong credentials: Please try again "+ statusCode,Toast.LENGTH_LONG).show()
-                            }
-                            //super.onSuccess(statusCode, headers, response)
-                        } //end of onsuccess
+            recyclerView = findViewById(R.id.recycler)
+            progressbar= findViewById(R.id.progressbar)
+            progressbar.visibility = View.VISIBLE
 
-                        override fun onFailure(
-                            statusCode: Int,
-                            headers: Array<out Header>?,
-                            throwable: Throwable?,
-                            errorResponse: JSONObject?
-                        ) {
-                            progress.visibility =View.GONE
-                            Toast.makeText(applicationContext,"Something went wrong from the Application side"
-                                    + " " + statusCode,
-                                Toast.LENGTH_LONG).show()
+            val client = AsyncHttpClient(true,80,443)
+            //        //pass the product list to adapter
+            recyclerAdapter = RecyclerAdapter(applicationContext)
+            recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+            recyclerView.setHasFixedSize(true)
 
-                            //super.onFailure(statusCode, headers, throwable, errorResponse)
-                        }
-
-
+            client.get(this, "https://musau.pythonanywhere.com/getconferenceroom",
+                null,
+                "application/json",
+                object: JsonHttpResponseHandler(){
+                    override fun onSuccess(statusCode: Int, headers: Array<out Header>?, response: JSONArray?) {
+                        //we convert json array to a list of a given model
+                        val gson = GsonBuilder().create()
+                        val list = gson.fromJson(response.toString(),
+                            Array<Conference_Room>::class.java).toList()
+                        //now pass the converted list to adapter
+                        recyclerAdapter.setProductListItems(list)
+                        progressbar.visibility = View.GONE
                     }
-                )
 
-            }
+                    override fun onFailure(
+                        statusCode: Int,
+                        headers: Array<out Header>?,
+                        responseString: String?,
+                        throwable: Throwable?
+                    ) {
+                        Toast.makeText(applicationContext, "No conference room for Reservation"+statusCode, Toast.LENGTH_LONG).show()
+                        progressbar.visibility = View.GONE
+                    }
+                }//end handler
+            )//end post
 
-
-            }
-
-
+            //now put the adapter to recycler view
+            recyclerView.adapter = recyclerAdapter
         }
 
 
-//val prefs: SharedPreferences = applicationContext.getSharedPreferences(
-//                                    "store",
-//                                    Context.MODE_PRIVATE
-//                                )
-//                                val editor: SharedPreferences.Editor = prefs.edit()
-//                                editor.putString("Email", user.email)
-//                                editor.putString("product_desc", item.product_desc)
-//                                editor.putString("product_cost", item.product_cost)
-//                                editor.putString("image_url", item.image_url)
-//                                editor.apply()
+
+
+            }
+
+
+
+
+
