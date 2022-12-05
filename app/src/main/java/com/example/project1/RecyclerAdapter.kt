@@ -45,13 +45,30 @@ class RecyclerAdapter(var context: Context):
 
         //image.setImageResource(item.image)
 
-        //        holder.itemView.setOnClickListener {
-        //
-        //
-        //
-        //        }
-    }
+        holder.itemView.setOnClickListener {
+            //create a shared prefferences variable to store our clicked product
+            val prefs: SharedPreferences = context.getSharedPreferences(
+                "store",
+                Context.MODE_PRIVATE
+            )
+            //save the product
+            val editor: SharedPreferences.Editor = prefs.edit()
+            editor.putString("room_id", item.room_id)
+            editor.putString("room_name", item.room_name)
+            editor.putString("room_desc", item.room_desc)
+            editor.putString("num_of_persons", item.num_of_persons)
+            editor.putString("availability", item.availability)
+            editor.putString("cost", item.cost)
+            editor.putString("image_url", item.image_url)
+            editor.apply()
 
+            //Navigate to SingleACtivity, Created Earlier
+            val i = Intent(context, SingleActivity::class.java)
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(i)
+        }
+
+    }
     override fun getItemCount(): Int { //count the number items coming from the API
         return conferenceRoom.size
     }
