@@ -12,6 +12,11 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,6 +153,18 @@
                     android:textStyle="bold"
                     android:layout_marginTop="25dp"
                     android:textSize="30dp"/>
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressbar"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter user_id "
+                    android:padding="10dp"
+                    android:textSize="20dp"
+                    android:id="@+id/user_id"
+                    android:layout_marginBottom="10dp"/>
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -167,7 +184,16 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="date"
+                    android:hint="Enter your mobile no."
+                    android:padding="10dp"
+                    android:textSize="20dp"
+                    android:id="@+id/phone"
+                    android:layout_marginBottom="10dp"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:hint="select Date"
                     android:padding="10dp"
                     android:textSize="20dp"
                     android:id="@+id/date"
@@ -176,7 +202,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:inputType="time"
+
+                    android:hint="select Start time"
                     android:textSize="20dp"
                     android:id="@+id/start_time"
                     android:layout_marginBottom="10dp"/>
@@ -184,7 +211,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:inputType="time"
+
+                    android:hint="select end time"
                     android:textSize="20dp"
                     android:id="@+id/end_time"
                     android:layout_marginBottom="10dp"/>
@@ -196,10 +224,19 @@
                     android:textSize="20dp"
                     android:id="@+id/R_id"
                     android:layout_marginBottom="10dp"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Make Reservation"
+                    android:id="@+id/make_reservation"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="10dp"/>
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+        </ScrollView>
+
 
     </LinearLayout>
 
