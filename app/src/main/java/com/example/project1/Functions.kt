@@ -20,4 +20,9 @@ class Functions {
 //        }
 
     }
+    fun saveSecretKey(sharedPref: SharedPreferences, secretKey: SecretKey): String {
+      val encodedKey = Base64.encodeToString(secretKey.encoded, Base64.NO_WRAP)
+      sharedPref.edit().putString(AppConstants.secretKeyPref, encodedKey).apply()
+      return encodedKey
+}
 }
