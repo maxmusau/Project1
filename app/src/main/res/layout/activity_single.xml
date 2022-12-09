@@ -12,9 +12,18 @@
         android:layout_height="match_parent"
         android:padding="10dp"
         android:orientation="vertical">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Reservation"
+            android:backgroundTint="@color/teal_200"
+            android:id="@+id/view_reservations"
+            android:textSize="20dp"
+            android:layout_marginBottom="10dp"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
 
         <androidx.cardview.widget.CardView
@@ -29,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="300dp"
                     android:layout_height="140dp"
@@ -232,10 +242,15 @@
                     android:textSize="20dp"
                     android:layout_marginBottom="10dp"/>
 
+
             </LinearLayout>
 
+
         </androidx.cardview.widget.CardView>
+
+
         </ScrollView>
+
 
 
     </LinearLayout>

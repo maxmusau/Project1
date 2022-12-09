@@ -56,7 +56,12 @@ class SingleActivity : AppCompatActivity() {
         Glide.with(applicationContext).load(image_url)
             .apply(RequestOptions().centerCrop())
             .into(image)
-
+        val view=findViewById<Button>(R.id.view_reservations)
+        view.setOnClickListener {
+            val i = Intent(applicationContext,Welcome::class.java)
+            startActivity(i)
+        }
+        //https://github.com/maxmusau/Project1
         //find ids for making reservation
         val user_id=findViewById<EditText>(R.id.user_id)
         val p_name=findViewById<EditText>(R.id.name)
@@ -65,75 +70,101 @@ class SingleActivity : AppCompatActivity() {
         val date=findViewById<EditText>(R.id.date)
         val start_time=findViewById<EditText>(R.id.start_time)
         val end_time=findViewById<EditText>(R.id.end_time)
+        val R_id=findViewById<EditText>(R.id.R_id)
         val make_reservation=findViewById<Button>(R.id.make_reservation)
         var progress =findViewById<ProgressBar>(R.id.progressbar)
         //hide the progress bar
-        progress.visibility= View.GONE //on opening the signup hide progress bar
-        //justpaste.it/9eiki
-        //loopj -library
+        progress.visibility= View.GONE
+
         make_reservation.setOnClickListener {
-            //start the progress bar
-            progress.visibility= View.VISIBLE //show progress bar
-            val client = AsyncHttpClient(true,80,443)
-            val body = JSONObject()
-            //access the details inserted by user -values from the edittexts
-            //put them details inside a body of json object
-            body.put("user_id",user_id.text.toString())
-            body.put("name",p_name.text.toString())
+            progress.visibility=View.VISIBLE
+            println("onclick")
+            val client =AsyncHttpClient(true,80,443)
+            val body=JSONObject()
+//             user_id = json['user_id']
+//    name = json['name']
+//    email = json['email']
+//    phone = json['phone']
+//    date = json['date']
+//    start_time = json['start_time']
+//    end_time = json['end_time']
+//    room_id=json['room_id']
+//sql querry  sql ="SELECT A.name,A.email,A.date,A.start_time,A.end_time,B.room_id,B.room_name,B.cost,B.num_of_persons,B.image_url FROM reservation_details AS A  INNER JOIN conference_room as B   ON A.fk_room_id=B.room_id"
+            body.put("user_id", user_id.text.toString())
+            body.put("name", p_name.text.toString())
             body.put("email",email.text.toString())
             body.put("phone",phone.text.toString())
             body.put("date",date.text.toString())
             body.put("start_time",start_time.text.toString())
             body.put("end_time",end_time.text.toString())
-
-            val con_body = StringEntity(body.toString())
-            // https://musau.pythonanywhere.com/reservation
+            body.put("room_id",R_id.text.toString())
+            val con_body=StringEntity(body.toString())
+            println("Reached here, before the api")
             client.post(this,"https://musau.pythonanywhere.com/reservation",con_body,
                 "application/json",
-                object : JsonHttpResponseHandler() {
-                    //create a function for onsuccess
-                    override fun onSuccess(
-                        statusCode: Int,
-                        headers: Array<out Header>?,
-                        response: JSONObject?
-                    ) {
 
-                        //check if status code is success (200)
-                        if (statusCode == 202){
-                            progress.visibility=View.GONE
-                            Toast.makeText(applicationContext,"You have successfuly made one reservation" +statusCode,
-                                Toast.LENGTH_LONG).show()
+            object : JsonHttpResponseHandler() {
 
-//                            val i = Intent(applicationContext,Signin::class.java)
-//                            startActivity(i)
-//                            finish()
-                        } //end of if
-                        else{
-                            Toast.makeText(applicationContext,"Please try again "+ statusCode,
-                                Toast.LENGTH_LONG).show()
-                        }
-                        //super.onSuccess(statusCode, headers, response)
-                    } //end of onsuccess
-                    //https://github.com/maxmusau/Navigation_Drawer/tree/master
-                    override fun onFailure(
-                        statusCode: Int,
-                        headers: Array<out Header>?,
-                        throwable: Throwable?,
-                        errorResponse: JSONObject?
-                    ) {
-                        progress.visibility = View.GONE
-                        Toast.makeText(applicationContext,"Something went wrong from the Application side"
-                                + " " + statusCode,
-                            Toast.LENGTH_LONG).show()
-
-                        //super.onFailure(statusCode, headers, throwable, errorResponse)
+                override fun onSuccess(
+                    statusCode: Int,
+                    headers: Array<out Header>?,
+                    response: JSONObject?
+                ) {
+                    println("printing after accessing onsuccess")
+                    if (statusCode ==202){
+                        progress.visibility =View.GONE
+                        Toast.makeText(applicationContext,"Reservation successful",Toast.LENGTH_LONG).show()
                     }
-
-// https://github.com/maxmusau/Project1.git
+                    else{
+                        progress.visibility=View.GONE
+                        Toast.makeText(applicationContext,"Reservation not successful $statusCode",Toast.LENGTH_LONG).show()
+                    }
+                    //super.onSuccess(statusCode, headers, response)
                 }
-            )
 
+                override fun onFailure(
+                    statusCode: Int,
+                    headers: Array<out Header>?,
+                    throwable: Throwable?,
+                    errorResponse: JSONObject?
+                ) {
+                    println("on failure")
+                    progress.visibility=View.GONE
+                    Toast.makeText(applicationContext,"Failed try again $statusCode",Toast.LENGTH_LONG).show()
+                }
+
+            }
+            )
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        val reserve=findViewById<Button>(R.id.reserve)
+//        reserve.setOnClickListener {
+//            val i=Intent(applicationContext,Welcome::class.java)
+//            startActivity(i)
+//
+//        }
+
+
 
     }
 }
