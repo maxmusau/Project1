@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
             //now put the adapter to recycler view
             recyclerView.adapter = recyclerAdapter
 
-//            mpesa integration
 
 
 
