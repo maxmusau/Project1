@@ -5,10 +5,14 @@ import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide import com.bumptech.glide.request.RequestOptions
+import com.loopj.android.http.AsyncHttpClient
+import com.loopj.android.http.JsonHttpResponseHandler
+import cz.msebera.android.httpclient.Header
+import cz.msebera.android.httpclient.entity.StringEntity
+import org.json.JSONObject
 
 class RecyclerAdapter(var context: Context):
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
@@ -29,6 +33,8 @@ class RecyclerAdapter(var context: Context):
         val availability = holder.itemView.findViewById(R.id.availability) as TextView
         val cost = holder.itemView.findViewById(R.id.cost) as TextView
         val image = holder.itemView.findViewById(R.id.image_url) as ImageView
+
+
 
         //bind
         val item = conferenceRoom[position]

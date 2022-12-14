@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -25,7 +26,7 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
         //https://github.com/maxmusau/conferenceRoom
         //consume the cinference room items from API
-        lateinit var confrerenceRoom:ArrayList<Conference_Room>
+
         lateinit var recyclerAdapter: RecyclerAdapter //call the adapter
         lateinit var progressbar: ProgressBar
         lateinit var recyclerView: RecyclerView
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-
+// 0703353657 musaumaxwell@gmail.com
             recyclerView = findViewById(R.id.recycler)
             progressbar= findViewById(R.id.progressbar)
             progressbar.visibility = View.VISIBLE
@@ -72,7 +73,14 @@ class MainActivity : AppCompatActivity() {
 
             //now put the adapter to recycler view
             recyclerView.adapter = recyclerAdapter
-        }
+
+//            mpesa integration
+
+
+
+
+            }
+
 
 
 

@@ -117,13 +117,10 @@ xmlns:tools="http://schemas.android.com/tools"
                         android:textSize="18dp"/>
 
                 </LinearLayout>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/make_reservation"
-                    android:text="Make Reservation"
-                    android:layout_marginBottom="10dp"/>
+
+
+
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

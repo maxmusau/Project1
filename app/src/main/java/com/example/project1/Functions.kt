@@ -19,10 +19,10 @@ class Functions {
 //            Toast.makeText(this, "No internet connecion.", Toast.LENGTH_LONG).show();
 //        }
 
-    }
-    fun saveSecretKey(sharedPref: SharedPreferences, secretKey: SecretKey): String {
-      val encodedKey = Base64.encodeToString(secretKey.encoded, Base64.NO_WRAP)
-      sharedPref.edit().putString(AppConstants.secretKeyPref, encodedKey).apply()
-      return encodedKey
+//    }
+//    fun saveSecretKey(sharedPref: SharedPreferences, secretKey: SecretKey): String {
+//      val encodedKey = Base64.encodeToString(secretKey.encoded, Base64.NO_WRAP)
+//      sharedPref.edit().putString(AppConstants.secretKeyPref, encodedKey).apply()
+//      return encodedKey
 }
 }
