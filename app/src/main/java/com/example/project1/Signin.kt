@@ -30,57 +30,60 @@ class Signin : AppCompatActivity() {
 
         signin.setOnClickListener {
             progress.visibility= View.VISIBLE //show progress bar
-            val client = AsyncHttpClient(true,80,443)
-            val body = JSONObject()
-            //access the details inserted by user -values from the edittexts
-            //put them details inside a body of json object
-            body.put("Email",email.text.toString())
-            body.put("Password",password.text.toString())
-            val con_body = StringEntity(body.toString())
-            // https://musau.pythonanywhere.com/signup
-            client.post(this,"https://musau.pythonanywhere.com/signin",con_body,
-                "application/json",
-                object : JsonHttpResponseHandler() {
-                    //create a function for onsuccess
-                    override fun onSuccess(
-                        statusCode: Int,
-                        headers: Array<out Header>?,
-                        response: JSONObject?
-                    ) {
-                        //check if status code is success (200)
-                        if (statusCode == 200){
+            val i = Intent(applicationContext,MainActivity::class.java)
+//                             startActivity(i)
+            
+//             val client = AsyncHttpClient(true,80,443)
+//             val body = JSONObject()
+//             //access the details inserted by user -values from the edittexts
+//             //put them details inside a body of json object
+//             body.put("Email",email.text.toString())
+//             body.put("Password",password.text.toString())
+//             val con_body = StringEntity(body.toString())
+//             // https://musau.pythonanywhere.com/signup
+//             client.post(this,"https://musau.pythonanywhere.com/signin",con_body,
+//                 "application/json",
+//                 object : JsonHttpResponseHandler() {
+//                     //create a function for onsuccess
+//                     override fun onSuccess(
+//                         statusCode: Int,
+//                         headers: Array<out Header>?,
+//                         response: JSONObject?
+//                     ) {
+//                         //check if status code is success (200)
+//                         if (statusCode == 200){
 
-                            Toast.makeText(applicationContext,"You have signed in successfully",
-                                Toast.LENGTH_LONG).show()
-                            val i = Intent(applicationContext,MainActivity::class.java)
-                            startActivity(i)
-                        } //end of if
-                        else{
-                            Toast.makeText(applicationContext,"Wrong credentials: Please try again "+ statusCode,
-                                Toast.LENGTH_LONG).show()
-                        }
-                        //super.onSuccess(statusCode, headers, response)
-                    } //end of onsuccess
+//                             Toast.makeText(applicationContext,"You have signed in successfully",
+//                                 Toast.LENGTH_LONG).show()
+//                             val i = Intent(applicationContext,MainActivity::class.java)
+//                             startActivity(i)
+//                         } //end of if
+//                         else{
+//                             Toast.makeText(applicationContext,"Wrong credentials: Please try again "+ statusCode,
+//                                 Toast.LENGTH_LONG).show()
+//                         }
+//                         //super.onSuccess(statusCode, headers, response)
+//                     } //end of onsuccess
 
-                    override fun onFailure(
-                        statusCode: Int,
-                        headers: Array<out Header>?,
-                        throwable: Throwable?,
-                        errorResponse: JSONObject?
-                    ) {
-                        progress.visibility = View.GONE
-                        Toast.makeText(applicationContext,"Something went wrong from the Application side"
-                                + " " + statusCode,
-                            Toast.LENGTH_LONG).show()
+//                     override fun onFailure(
+//                         statusCode: Int,
+//                         headers: Array<out Header>?,
+//                         throwable: Throwable?,
+//                         errorResponse: JSONObject?
+//                     ) {
+//                         progress.visibility = View.GONE
+//                         Toast.makeText(applicationContext,"Something went wrong from the Application side"
+//                                 + " " + statusCode,
+//                             Toast.LENGTH_LONG).show()
 
-                        //super.onFailure(statusCode, headers, throwable, errorResponse)
-                    }
+//                         //super.onFailure(statusCode, headers, throwable, errorResponse)
+//                     }
 
 
-                }
-            )
+//                 }
+//             )
 
-        }
+//         }
 
     }
 }
