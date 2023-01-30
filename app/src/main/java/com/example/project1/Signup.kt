@@ -33,61 +33,61 @@ class Signup : AppCompatActivity() {
         signup.setOnClickListener {
             //start the progress bar
             progress.visibility=View.VISIBLE //show progress bar
-            val client =AsyncHttpClient(true,80,443)
-            val body =JSONObject()
-            //access the details inserted by user -values from the edittexts
-            //put them details inside a body of json object
-            body.put("Name",name.text.toString())
-            body.put("Email",email.text.toString())
-            body.put("Password",password.text.toString())
-            body.put("Confirm",confirm.text.toString())
-            body.put("Phone",phone.text.toString())
+//             val client =AsyncHttpClient(true,80,443)
+//             val body =JSONObject()
+//             //access the details inserted by user -values from the edittexts
+//             //put them details inside a body of json object
+//             body.put("Name",name.text.toString())
+//             body.put("Email",email.text.toString())
+//             body.put("Password",password.text.toString())
+//             body.put("Confirm",confirm.text.toString())
+//             body.put("Phone",phone.text.toString())
 
-            val con_body =StringEntity(body.toString())
-            // https://musau.pythonanywhere.com/signup
-            client.post(this,"https://musau.pythonanywhere.com/signup",con_body,
-                "application/json",
-                object : JsonHttpResponseHandler() {
-                    //create a function for onsuccess
-                    override fun onSuccess(
-                        statusCode: Int,
-                        headers: Array<out Header>?,
-                        response: JSONObject?
-                    ) {
+//             val con_body =StringEntity(body.toString())
+//             // https://musau.pythonanywhere.com/signup
+//             client.post(this,"https://musau.pythonanywhere.com/signup",con_body,
+//                 "application/json",
+//                 object : JsonHttpResponseHandler() {
+//                     //create a function for onsuccess
+//                     override fun onSuccess(
+//                         statusCode: Int,
+//                         headers: Array<out Header>?,
+//                         response: JSONObject?
+//                     ) {
 
-                        //check if status code is success (200)
-                        if (statusCode == 201){
-                            Toast.makeText(applicationContext,"You have been successfully registered" +statusCode,
-                                Toast.LENGTH_LONG).show()
-                            val i =Intent(applicationContext,Signin::class.java)
-                            startActivity(i)
-                            finish()
-                        } //end of if
-                        else{
-                            Toast.makeText(applicationContext,"Please try again "+ statusCode,Toast.LENGTH_LONG).show()
-                        }
-                        //super.onSuccess(statusCode, headers, response)
-                    } //end of onsuccess
-//https://github.com/maxmusau/Navigation_Drawer/tree/master
-                    override fun onFailure(
-                        statusCode: Int,
-                        headers: Array<out Header>?,
-                        throwable: Throwable?,
-                        errorResponse: JSONObject?
-                    ) {
-                        progress.visibility =View.GONE
-                        Toast.makeText(applicationContext,"Something went wrong from the Application side"
-                                + " " + statusCode,
-                        Toast.LENGTH_LONG).show()
+//                         //check if status code is success (200)
+//                         if (statusCode == 201){
+//                             Toast.makeText(applicationContext,"You have been successfully registered" +statusCode,
+//                                 Toast.LENGTH_LONG).show()
+//                             val i =Intent(applicationContext,Signin::class.java)
+//                             startActivity(i)
+//                             finish()
+//                         } //end of if
+//                         else{
+//                             Toast.makeText(applicationContext,"Please try again "+ statusCode,Toast.LENGTH_LONG).show()
+//                         }
+//                         //super.onSuccess(statusCode, headers, response)
+//                     } //end of onsuccess
+// //https://github.com/maxmusau/Navigation_Drawer/tree/master
+//                     override fun onFailure(
+//                         statusCode: Int,
+//                         headers: Array<out Header>?,
+//                         throwable: Throwable?,
+//                         errorResponse: JSONObject?
+//                     ) {
+//                         progress.visibility =View.GONE
+//                         Toast.makeText(applicationContext,"Something went wrong from the Application side"
+//                                 + " " + statusCode,
+//                         Toast.LENGTH_LONG).show()
 
-                        //super.onFailure(statusCode, headers, throwable, errorResponse)
-                    }
+//                         //super.onFailure(statusCode, headers, throwable, errorResponse)
+//                     }
 
-// https://github.com/maxmusau/Project1.git
-                }
-            )
+// // https://github.com/maxmusau/Project1.git
+//                 }
+//             )
 
-        }
+//         }
 //echo "# Project1" >> README.md
 //git init
 //git add README.md
